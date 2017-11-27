@@ -5,7 +5,6 @@ public class Start_Benford {
 	public static void main(String[] args) {
 
 		Benford_Analyzer ba = new Benford_Analyzer();
-		
 		Vector<String> digits = new Vector<>();
 		
 		for (int i = 0; i < 30; i++) {
@@ -37,6 +36,10 @@ public class Start_Benford {
 		}
 		
 		ba.analyze_digits(digits);
+		
+		AbstractFileReader afr = new CsvReader("F:\\Studium\\Bachelor\\Bachelorarbeit\\Python\\IAV RDE\\correlation_coeffs.csv", ";");
+		Vector<String> csv = afr.read();
+		ba.analyze_digits(csv);
 	}
 
 }
