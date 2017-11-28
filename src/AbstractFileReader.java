@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Vector;
 
 public abstract class AbstractFileReader {
@@ -8,4 +9,6 @@ public abstract class AbstractFileReader {
 	}
 	
 	public abstract Vector<String> read();
+	
+	public abstract String showTextPdf();
 }

@@ -1,5 +1,7 @@
 import java.util.Vector;
 
+import org.apache.pdfbox.contentstream.operator.text.ShowText;
+
 public class Start_Benford {
 
 	public static void main(String[] args) {
@@ -35,11 +37,19 @@ public class Start_Benford {
 			digits.add("93");
 		}
 		
-		ba.analyze_digits(digits);
+		//ba.analyze_digits(digits);
 		
-		AbstractFileReader afr = new CsvReader("F:\\Studium\\Bachelor\\Bachelorarbeit\\Python\\IAV RDE\\correlation_coeffs.csv", ";");
+		/*AbstractFileReader afr = new CsvReader("/media/kamgo/Données/Projekt/Forensik_Benfords_Law/datein/SampleCSVFile_2kb.csv", ";");
 		Vector<String> csv = afr.read();
-		ba.analyze_digits(csv);
+		ba.analyze_digits(csv);*/
+		
+		AbstractFileReader afr = new PdfReader("/media/kamgo/Données/Projekt/Forensik_Benfords_Law/datein/Kloeckner_Co_Geschaeftsbericht_2016.pdf");
+		//Vector<String> csv = afr.read();
+		//ba.analyze_digits(csv);
+		
+		 System.out.println( "Text in the area:" + afr.showTextPdf());
+		
+		
 	}
 
 }
