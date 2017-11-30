@@ -1,0 +1,19 @@
+Herausfinden inwiefern Bilder fuer Benford geeignet sind
+   - welche Bildwerte koennen genutzt werden (RGB ist Zahl zwischen 0-255 -> Zahlen startent mit 1 und 2 kommen viel haeufiger vor, ist das schlimm?)
+   - Beispielbilder die der Benfordreihe entsprechen und welche die es nicht tun finden
+   - fuer letztere ggfls. veraenderte/bearbeitete Bilder nutzen?
+   - VERANTWORTLICHER:
+
+PDFReader erstellen
+   - VERANTWORTLICHER: Romeo
+
+Auswertung im Benford_Analyzer hinzufuegen
+   - Berechnung des Fehlers zur Benfordkurve fuer die aktuellen Zahlen
+   - Berechnung des Fehlers zur Gleichverteilungskurve fuer die aktuellen Zahlen
+   - Berechnung des Fehlers zur Regressionskurve (hiess die so??) fuer die aktuellen Zahlen
+   - Auswertung zu welcher Kurve der Fehler am geringsten ist (entspricht dem Resultat)
+   - VERANTWORTLICHER:
+
+graphische Auswertung
+   - Darstellung der Verteilung der Zahlen in einer Graphik/ einem Diagramm
+   - VERANTWORTLICHER: Linda
