@@ -43,10 +43,5 @@ public class CsvReader extends AbstractFileReader {
 		return result;
 	}
 
-	@Override
-	public String showTextPdf() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+		
 }

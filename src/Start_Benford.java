@@ -1,10 +1,23 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.pdfbox.contentstream.operator.text.ShowText;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 public class Start_Benford {
+	
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
+		
 
 		Benford_Analyzer ba = new Benford_Analyzer();
 		Vector<String> digits = new Vector<>();
@@ -39,17 +52,15 @@ public class Start_Benford {
 		
 		//ba.analyze_digits(digits);
 		
-		/*AbstractFileReader afr = new CsvReader("/media/kamgo/Données/Projekt/Forensik_Benfords_Law/datein/SampleCSVFile_2kb.csv", ";");
-		Vector<String> csv = afr.read();
-		ba.analyze_digits(csv);*/
-		
-		AbstractFileReader afr = new PdfReader("/media/kamgo/Données/Projekt/Forensik_Benfords_Law/datein/Kloeckner_Co_Geschaeftsbericht_2016.pdf");
+		//AbstractFileReader afr = new CsvReader("F:\\Projekt\\Forensik_Benfords_Law\\datein\\SampleCSVFile_2kb.csv", ";");
 		//Vector<String> csv = afr.read();
+		//System.out.println(csv);
 		//ba.analyze_digits(csv);
 		
-		 System.out.println( "Text in the area:" + afr.showTextPdf());
-		
-		
+		AbstractFileReader afr = new PdfReader("F:\\Projekt\\Forensik_Benfords_Law\\datein\\Kloeckner_Co_Geschaeftsbericht_2016.pdf");
+		Vector<String> pdf = afr.read();
+		System.out.println(pdf);
+		ba.analyze_digits(pdf);
 	}
 
 }

@@ -21,59 +21,11 @@ public class PdfReader extends  AbstractFileReader {
 	
     @Override
     public Vector<String> read() {
-        File pdfFile = new File(pathToFile);
-        Vector<String> result = new Vector<String>();
-        List<List<String>> lines = new ArrayList<>();
-        PDDocument document = null; 
-        Scanner inputStream;
-        String separator = " ";
-        try 
-        {
-        	 document = PDDocument.load(pdfFile);
-        	 PDFTextStripper stripper = new PDFTextStripper();
-        	 String pdfText = stripper.getText(document).toString();
-        	 inputStream = new Scanner(pdfText);
-        	 while(inputStream.hasNext()){
-                 String line= inputStream.next();
-                 String[] values = line.split(separator);
-                 lines.add(Arrays.asList(values));
-             }
-
-             inputStream.close();      	 
-        } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        finally
-        {
-        	if (document != null)
-        	{
-        		try {
-					document.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        	}
-        }
-        
-        for(List<String> l : lines) 
-        	for(String s : l) 
-        		result.add(s.replaceAll("\\D+",""));
-        	
-        result.removeAll(Arrays.asList("",null));
-        
-        return result;
-    }
-
-	@Override
-	public String showTextPdf() {
 		// TODO Auto-generated method stub
 		File pdfFile = new File(pathToFile);
-        Vector<String> result = new Vector<String>();
-        List<List<String>> lines = new ArrayList<>();
         PDDocument document = null; 
         String pdfText = null;
+               
         try 
         {
         	 document = PDDocument.load(pdfFile);
@@ -95,8 +47,18 @@ public class PdfReader extends  AbstractFileReader {
 				}
         	}
         }
+        // extract number
         
-        return pdfText;
-	}
+      String[] number = pdfText.split("[^ 0-9]");
+      Vector<String> vector = new Vector<String>(); 
+      for (int i=0;i<number.length;i++){
+    	  vector.add(number[i].replaceAll("\\D+",""));
+    	  }
+      vector.removeAll(Arrays.asList("",null));
+      //convert array of String to vector
+      
+      return vector;
+    }
+
     	
 }

@@ -9,6 +9,5 @@ public abstract class AbstractFileReader {
 	}
 	
 	public abstract Vector<String> read();
-	
-	public abstract String showTextPdf();
+
 }
