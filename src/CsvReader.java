@@ -16,6 +16,7 @@ public class CsvReader extends AbstractFileReader {
 	
 	@Override
 	public Vector<String> read() {
+		
 		File csvFile = new File(pathToFile);
         List<List<String>> lines = new ArrayList<>();
         Vector<String> result = new Vector<String>();
@@ -42,4 +43,5 @@ public class CsvReader extends AbstractFileReader {
 		return result;
 	}
 
+		
 }
