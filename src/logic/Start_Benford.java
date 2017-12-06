@@ -1,21 +1,8 @@
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+package logic;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.pdfbox.contentstream.operator.text.ShowText;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
 
 public class Start_Benford {
 	
-
-	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		
 
@@ -56,8 +43,8 @@ public class Start_Benford {
 		//Vector<String> csv = afr.read();
 		//System.out.println(csv);
 		//ba.analyze_digits(csv);
-		
-		AbstractFileReader afr = new PdfReader("F:\\Projekt\\Forensik_Benfords_Law\\datein\\Kloeckner_Co_Geschaeftsbericht_2016.pdf");
+		System.out.println("Reading PDF");
+		AbstractFileReader afr = new PdfReader("F:\\Studium\\Master\\IT & Medienforensik\\Forensik_Benfords_Law\\Test Data\\Kloeckner_Co_Geschaeftsbericht_2016.pdf");
 		Vector<String> pdf = afr.read();
 		System.out.println(pdf);
 		ba.analyze_digits(pdf);
