@@ -14,7 +14,7 @@ public class PicReader extends AbstractFileReader {
 		super(pathToFile);
 		
 		try {
-		    img = ImageIO.read(getClass().getResource(pathToFile));
+		    img = ImageIO.read(new File(pathToFile));
 		} 
 		catch (IOException e) {
 		}
