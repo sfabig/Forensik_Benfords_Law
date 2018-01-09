@@ -57,7 +57,7 @@ public class Start_Benford {
 		
 		
 
-		AbstractFileReader afr = new PicReader("C:\\Users\\linda\\Documents\\Uni\\Git\\Forensik_Benfords_Law\\TestData\\panda.jpg");
+		AbstractFileReader afr = new PicReader("F:\\Studium\\Master\\IT & Medienforensik\\Forensik_Benfords_Law\\TestData\\panda.jpg");
 //		AbstractFileReader afr = new PicReader("/TestData/panda.jpg");
 		//AbstractFileReader afr = new PicReader("/images/cthulhu.png");
 		Vector<Double> occ = ba.analyze_digits(afr.read());

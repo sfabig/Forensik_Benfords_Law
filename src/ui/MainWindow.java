@@ -19,10 +19,16 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
+import org.apache.commons.io.FilenameUtils;
+import org.jfree.io.FileUtilities;
+
+import logic.AbstractFileReader;
+
 public class MainWindow {
 
 	private JFrame frmBenfordsLaw;
 	private JTextField txtSeparator;
+	private AbstractFileReader fileReader;
 
 	/**
 	 * Launch the application.
@@ -53,7 +59,7 @@ public class MainWindow {
 	private void initialize() {
 		frmBenfordsLaw = new JFrame();
 		frmBenfordsLaw.setTitle("Benford's Law");
-		frmBenfordsLaw.setBounds(100, 100, 450, 187);
+		frmBenfordsLaw.setBounds(100, 100, 450, 268);
 		frmBenfordsLaw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBenfordsLaw.getContentPane().setLayout(null);
 		
@@ -104,8 +110,29 @@ public class MainWindow {
 		txtSeparator.setColumns(10);
 		
 		JButton btnRun = new JButton("Run");
+		btnRun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				switch(FilenameUtils.getExtension(lblpathtofile.getText())) {
+				}
+			}
+		});
 		btnRun.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnRun.setBounds(10, 90, 106, 48);
+		btnRun.setBounds(10, 169, 106, 48);
 		frmBenfordsLaw.getContentPane().add(btnRun);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_1.setBounds(10, 90, 407, 68);
+		frmBenfordsLaw.getContentPane().add(panel_1);
+		panel_1.setLayout(new MigLayout("", "[][][]", "[][]"));
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("New check box");
+		panel_1.add(chckbxNewCheckBox, "cell 0 0");
+		
+		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("New check box");
+		panel_1.add(chckbxNewCheckBox_2, "cell 1 0");
+		
+		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("New check box");
+		panel_1.add(chckbxNewCheckBox_1, "cell 2 0");
 	}
 }
