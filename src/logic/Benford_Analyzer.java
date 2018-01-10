@@ -121,17 +121,16 @@ public class Benford_Analyzer {
 		benfordVerteilung.add(0.051);
 		benfordVerteilung.add(0.046);
 		
-		for(int i = 1; i < occurences.size(); i++) {
+		for(int i = 0; i < occurences.size(); i++) {
 			benfordError += (benfordVerteilung.get(i) - occurences.get(i)) * (benfordVerteilung.get(i) - occurences.get(i));
 			normalError += (1.0/9 - occurences.get(i)) * (1.0/9 - occurences.get(i));
-			regressionError += ((regressionGerade.getW1() * occurences.get(i) + regressionGerade.getW0()) - occurences.get(i))
-					* ((regressionGerade.getW1() * occurences.get(i) + regressionGerade.getW0()) - occurences.get(i));
+			regressionError += ((regressionGerade.getW1() * (i+1) + regressionGerade.getW0()) - occurences.get(i))
+					* ((regressionGerade.getW1() * (i+1) + regressionGerade.getW0()) - occurences.get(i));
 		}
 		
 		benfordError /= 9;
 		normalError /= 9;
 		regressionError /= 9;
-
 	}
 
 	public void showBarChart(Vector<Double> occurences) {
@@ -186,7 +185,7 @@ public class Benford_Analyzer {
 	    subtitles.add(new TextTitle("Normalverteilung Fehler: " + normalError + " MSE"));
 	    chart.setSubtitles(subtitles);
 	    chart.addLegend(legendTitle);
-
+	    
 	    ChartPanel chartPanel = new ChartPanel(chart);
 		resultWindow.setContentPane(chartPanel);
 		resultWindow.pack();
