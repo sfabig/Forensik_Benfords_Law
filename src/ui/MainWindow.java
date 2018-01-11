@@ -18,13 +18,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Vector;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
-import logic.FileTypeFilter;
+import logic.*;
 
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
@@ -37,6 +38,7 @@ public class MainWindow {
 	private JFileChooser fc;
 	private String extension;
 	private JLabel lblpathtofile;
+	private String separator;
 
 	/**
 	 * Launch the application.
@@ -132,25 +134,44 @@ public class MainWindow {
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String pathtofile = lblpathtofile.getText();
-				if (extension.startsWith("CSV")) {
-					if (txtSeparator.getText().isEmpty()) {
-						String separator = JOptionPane.showInputDialog("Geben Sie bitte ein Separator ein:");
-						if (separator.isEmpty() == false) {
-
-						}
+				separator = txtSeparator.getText();
+		       if (pathtofile.contains("path/to/file")) {
+		    	   JOptionPane.showMessageDialog(null, "Please set the  Path to your File!");	    	   
+		       }
+		       else {
+		   		if (extension.startsWith("CSV")) {
+					if (separator.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "CVS File need a Separator!");	
 					}
-					// Etwas machen mit CSV !
+					else {
+						// Etwas machen mit CSV !
+						Benford_Analyzer ba = new Benford_Analyzer();
+						AbstractFileReader afr = new CsvReader(pathtofile, separator);
+						Vector<Double> occ = ba.analyze_digits(afr.read());
+						ba.showBarChart(occ);						
+					}
+					
 				}
 				else {
 					if (extension.startsWith("PDF")) {
 						// Etwas machen mit pdf
+						Benford_Analyzer ba = new Benford_Analyzer();
+						AbstractFileReader afr = new PdfReader(pathtofile);
+						Vector<Double> occ = ba.analyze_digits(afr.read());
+						ba.showBarChart(occ);
 					}
 					else {
 						// Etwas machen mit image
+						Benford_Analyzer ba = new Benford_Analyzer();
+						AbstractFileReader afr = new PicReader(pathtofile);
+						Vector<Double> occ = ba.analyze_digits(afr.read());
+						ba.showBarChart(occ);
+						
 					}
 
 
 				}
+		       }
 			}
 		});
 
