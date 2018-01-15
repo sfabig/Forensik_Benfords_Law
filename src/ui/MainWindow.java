@@ -4,8 +4,6 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
@@ -17,28 +15,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.Vector;
-
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
-import logic.*;
+import org.apache.commons.io.FilenameUtils;
+import org.jfree.io.FileUtilities;
 
-import javax.swing.JRadioButton;
-import javax.swing.SwingConstants;
-import java.awt.Dimension;
+import logic.AbstractFileReader;
 
 public class MainWindow {
 
 	private JFrame frmBenfordsLaw;
 	private JTextField txtSeparator;
-	private JFileChooser fc;
-	private String extension;
-	private JLabel lblpathtofile;
-	private String separator;
+	private AbstractFileReader fileReader;
 
 	/**
 	 * Launch the application.
@@ -68,9 +58,8 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frmBenfordsLaw = new JFrame();
-		frmBenfordsLaw.setResizable(false);
 		frmBenfordsLaw.setTitle("Benford's Law");
-		frmBenfordsLaw.setBounds(100, 100, 409, 185);
+		frmBenfordsLaw.setBounds(100, 100, 450, 268);
 		frmBenfordsLaw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBenfordsLaw.getContentPane().setLayout(null);
 
@@ -80,9 +69,11 @@ public class MainWindow {
 		frmBenfordsLaw.getContentPane().add(panel);
 		panel.setLayout(new MigLayout("", "[][grow][]", "[][][]"));
 
-		lblpathtofile = new JLabel("/path/to/file");
-		lblpathtofile.setMinimumSize(new Dimension(25, 14));
-		lblpathtofile.setPreferredSize(new Dimension(25, 14));
+		JLabel lblFile = new JLabel("File:");
+		panel.add(lblFile, "cell 0 0");
+		lblFile.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+		JLabel lblpathtofile = new JLabel("/path/to/file");
 		lblpathtofile.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -97,29 +88,17 @@ public class MainWindow {
 				lblpathtofile.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
+		panel.add(lblpathtofile, "cell 1 0,growx,aligny center");
+		lblpathtofile.setForeground(Color.BLUE);
+		lblpathtofile.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JButton btnSet = new JButton("Set...");
 		btnSet.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnSet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fc = new JFileChooser(new File(".\\TestData\\"));
-				fc.setDialogTitle("upload your are File!");
-				fc.setFileFilter(new FileTypeFilter(".csv", "CSV Datei"));
-				fc.setFileFilter(new FileTypeFilter(".pdf", "PDF Datei"));
-				fc.setFileFilter(new FileTypeFilter(".jpg", "JPEG Datei"));
-				fc.setFileFilter(new FileTypeFilter(".png", "PNG Datei"));
-				int result = fc.showOpenDialog(null);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File fi = fc.getSelectedFile();
-					 extension = fc.getFileFilter().getDescription();
-					lblpathtofile.setText(fi.getAbsolutePath());
-				}
 			}
 		});
-		panel.add(btnSet, "cell 0 0,grow");
-		panel.add(lblpathtofile, "cell 1 0,growx,aligny center");
-		lblpathtofile.setForeground(Color.BLUE);
-		lblpathtofile.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel.add(btnSet, "cell 2 0,grow");
 
 		JLabel lblCsvSeparator = new JLabel("CSV Separator:");
 		lblCsvSeparator.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -133,50 +112,27 @@ public class MainWindow {
 		JButton btnRun = new JButton("Run");
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String pathtofile = lblpathtofile.getText();
-				separator = txtSeparator.getText();
-		       if (pathtofile.contains("path/to/file")) {
-		    	   JOptionPane.showMessageDialog(null, "Please set the  Path to your File!");	    	   
-		       }
-		       else {
-		   		if (extension.startsWith("CSV")) {
-					if (separator.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "CVS File need a Separator!");	
-					}
-					else {
-						// Etwas machen mit CSV !
-						Benford_Analyzer ba = new Benford_Analyzer();
-						AbstractFileReader afr = new CsvReader(pathtofile, separator);
-						Vector<Double> occ = ba.analyze_digits(afr.read());
-						ba.showBarChart(occ);						
-					}
-					
+				switch(FilenameUtils.getExtension(lblpathtofile.getText())) {
 				}
-				else {
-					if (extension.startsWith("PDF")) {
-						// Etwas machen mit pdf
-						Benford_Analyzer ba = new Benford_Analyzer();
-						AbstractFileReader afr = new PdfReader(pathtofile);
-						Vector<Double> occ = ba.analyze_digits(afr.read());
-						ba.showBarChart(occ);
-					}
-					else {
-						// Etwas machen mit image
-						Benford_Analyzer ba = new Benford_Analyzer();
-						AbstractFileReader afr = new PicReader(pathtofile);
-						Vector<Double> occ = ba.analyze_digits(afr.read());
-						ba.showBarChart(occ);
-						
-					}
-
-
-				}
-		       }
 			}
 		});
-
 		btnRun.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnRun.setBounds(148, 90, 106, 48);
+		btnRun.setBounds(10, 169, 106, 48);
 		frmBenfordsLaw.getContentPane().add(btnRun);
+
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_1.setBounds(10, 90, 407, 68);
+		frmBenfordsLaw.getContentPane().add(panel_1);
+		panel_1.setLayout(new MigLayout("", "[][][]", "[][]"));
+
+		JCheckBox chckbxNewCheckBox = new JCheckBox("New check box");
+		panel_1.add(chckbxNewCheckBox, "cell 0 0");
+
+		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("New check box");
+		panel_1.add(chckbxNewCheckBox_2, "cell 1 0");
+
+		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("New check box");
+		panel_1.add(chckbxNewCheckBox_1, "cell 2 0");
 	}
 }
